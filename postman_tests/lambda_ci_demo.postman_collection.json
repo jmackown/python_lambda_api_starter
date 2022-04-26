@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "17c3e93a-8498-4602-b045-2cafcac6b2e8",
+		"name": "lambda_ci_demo Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "HEAD",
+				"header": [],
+				"url": {
+					"raw": "http://{{host_name}}:{{host_port}}/healthcheck",
+					"protocol": "http",
+					"host": [
+						"{{host_name}}"
+					],
+					"port": "{{host_port}}",
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "greetings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Data types\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.greetings).to.be.a(\"string\");",
+							"});",
+							"pm.test(\"JSON values\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.greetings).to.eql(pm.collectionVariables.get(\"my_name\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host_name}}:{{host_port}}/hello/{{my_name}}",
+					"protocol": "http",
+					"host": [
+						"{{host_name}}"
+					],
+					"port": "{{host_port}}",
+					"path": [
+						"hello",
+						"{{my_name}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "my_name",
+			"value": "jennifer"
+		}
+	]
+}

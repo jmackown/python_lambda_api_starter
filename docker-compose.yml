@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8000:80
+  api_test:
+      image: postman/newman_ubuntu1404:4.5.5
+      depends_on:
+        - api
+      entrypoint: [""]
+      volumes:
+        - ./postman_tests:/etc/newman/postman_tests
+      command: >
+          newman run ./postman_tests/lambda_ci_demo.postman_collection.json
+          --environment="./postman_tests/docker.postman_environment.json"
+          --reporters cli,junit --reporter-junit-export ./postman_tests/api-results.xml

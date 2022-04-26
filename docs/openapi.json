@@ -1,0 +1,1 @@
+{"openapi": "3.0.2", "info": {"title": "FastAPI", "version": "0.1.0"}, "paths": {"/healthcheck": {"head": {"tags": ["admin"], "summary": "Healthcheck", "operationId": "healthcheck_healthcheck_head", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}}}

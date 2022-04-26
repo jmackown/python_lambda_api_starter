@@ -1,0 +1,22 @@
+
+pipelines:
+  default:
+      - step:
+          name: Lint & Unit Test
+          image: python:3.9.6-slim-buster
+          caches:
+            - pip
+            - pre-commit
+          script:
+            - pwd
+            - ls
+            - apt-get update && apt-get -y install git
+            - pip install pre-commit
+            - pre-commit run --all-files
+            - pip install -r ./app/requirements.txt -r ./app/requirements_local.txt
+  #          - python3 -m pytest --cov api --cov-fail-under=90
+            - python3 -m pytest ./app/tests
+
+definitions:
+  caches:
+    pre-commit: ~/.cache/pre-commit
